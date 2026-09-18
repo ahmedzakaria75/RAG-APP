@@ -1,5 +1,7 @@
 from fastapi import APIRouter
+from fastapi import Depends
 from fastapi import UploadFile
+from helpers.config import get_settings , Settings
 
 
 data_router = APIRouter(
@@ -7,8 +9,9 @@ data_router = APIRouter(
     tags = ["api_v1"]
 )
 
-@data_router.get("Upload/{project_id}/")
-def uploadfile(project_id:str , file:uploadfile):
+@data_router.post("Upload/{project_id}/")
+def uploadfile(project_id:str , file:UploadFile,
+               app_settings : Settings=Depends(get_settings)):
 
     #validate uploaded file 
     pass
