@@ -15,11 +15,11 @@ logger = logging.getLogger("uvicorn.error")
 
 
 data_router = APIRouter(
-    prefix = "/api/v1",
+    prefix = "/api/v1/data",
     tags = ["api_v1_data"]
 )
 
-@data_router.post("/Upload/{project_id}/data")
+@data_router.post("/Upload/{project_id}")
 async def uploadfile(project_id:str , file:UploadFile,
                app_settings : Settings=Depends(get_settings)):
 
@@ -36,8 +36,6 @@ async def uploadfile(project_id:str , file:UploadFile,
             )
 
         
-        project_dir_path = Project_Controller().get_project_path(project_id=project_id)
-
         file_path , file_id = data_controller.generate_unique_file_path(
             orig_file_name=file.filename,
             project_id=project_id
